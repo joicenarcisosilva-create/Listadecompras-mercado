@@ -1,23 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#EA3788">
+    <meta name="description" content="Lista de compras compartilhada - Organize seus itens por categorias automaticamente">
+    <title>Minha Lista 2026</title>
     <link rel="stylesheet" href="src/css/index.css">
-    <title>Lista 2026</title>
+    <!-- VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <h2 class="titulo">Minha lista de compras</h2>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <i class="fas fa-shopping-cart"></i>
+                <h1>Lista 2026</h1>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="themeToggle" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="icon-btn" id="logoutBtn" aria-label="Sair">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
 
-    <button onclick="logout()">Sair</button>
+        <!-- Estatísticas -->
+        <div class="stats" id="stats" aria-label="Estatísticas da lista">
+            <div class="stat-card">
+                <i class="fas fa-list"></i>
+                <span id="totalItens">0</span>
+                <small>itens</small>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <span id="totalComprados">0</span>
+                <small>comprados</small>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tags"></i>
+                <span id="totalCategorias">0</span>
+                <small>categorias</small>
+            </div>
+        </div>
 
-    <ul id="lista"></ul>
+        <!-- Formulário de adição -->
+        <div class="add-item-form">
+            <div class="input-group">
+                <input type="text" id="itemInput" placeholder="Ex: Arroz, Frango, Tomate..." autocomplete="off">
+                <button id="addBtn" class="btn-add">
+                    <i class="fas fa-plus"></i> Adicionar
+                </button>
+            </div>
+            <div class="suggestions" id="suggestions">
+                <span class="suggestion-badge">🥩 Carne</span>
+                <span class="suggestion-badge">🐔 Frango</span>
+                <span class="suggestion-badge">🍅 Tomate</span>
+                <span class="suggestion-badge">🧀 Queijo</span>
+                <span class="suggestion-badge">🥛 Leite</span>
+            </div>
+        </div>
 
-    <input type="text" id="item" placeholder="Novo Item">
-    <button onclick="adicionarItem()">Adicionar</button>
+        <!-- Categorias e lista -->
+        <div class="categories-container" id="categoriesContainer">
+            <!-- As categorias serão inseridas dinamicamente aqui -->
+        </div>
+
+        <!-- Botão flutuante para limpar comprados -->
+        <button class="fab" id="clearPurchasedBtn" aria-label="Limpar itens comprados">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </div>
+
+    <!-- Feedback sonoro -->
+    <audio id="addSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/click-button-01.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="checkSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="deleteSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/button-09.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
 
     <script type="module" src="app.js"></script>
-
-    
+    <script>
+        // Inicializar VLibras
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
 </html>
